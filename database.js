@@ -1,16 +1,17 @@
 const mysql = require("mysql");
-const dbInfo = require("./database").mysqlInfo;
+const dbInfo = require("./db/keys").mysqlInfo;
 
 //create connection
-const DB = mysql.createConnection(dbInfo)
+const DB = mysql.createPool(dbInfo);
 
 //connect 
-DB.connect((err) => {
+DB.getConnection((err) => {
   if(err) {
     console.log(err);
   }
   console.log("MySQL connected");
 })
+
 
 module.exports = DB;
 

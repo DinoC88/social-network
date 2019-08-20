@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const passport = require("passport");
-const conn = require("../../db/index");
+const conn = require("../../database");
 
 //Load validation
 const validateProfileInput = require("../../validation/profile");

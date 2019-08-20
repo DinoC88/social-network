@@ -1,24 +1,11 @@
 const express = require("express");
 const passport = require("passport");
 const path = require("path");
-const mysql = require("mysql");
 const users = require("./routes/api/users");
 const profile = require("./routes/api/profile");
 const posts = require("./routes/api/posts");
 const bodyParser = require("body-parser");
 const app = express();
-const dbInfo = require("./db/database").mysqlInfo;
-
-//create connection
-const DB = mysql.createConnection(dbInfo)
-
-//connect 
-DB.connect((err) => {
-  if(err) {
-    console.log(err);
-  }
-  console.log("MySQL connected");
-})
 
 
 //Bodyparser middleware
