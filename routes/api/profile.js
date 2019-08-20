@@ -1,10 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const mongoose = require("mongoose");
 const passport = require("passport");
-const keys = require("../../config/keys").secretOrKey;
 const conn = require("../../db/index");
-const isEmpty = require("../../validation/is-empty");
 
 //Load validation
 const validateProfileInput = require("../../validation/profile");
