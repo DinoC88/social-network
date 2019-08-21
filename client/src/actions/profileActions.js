@@ -5,7 +5,9 @@ import {
   CLEAR_CURRENT_PROFILE,
   GET_ERRORS,
   SET_CURRENT_USER,
-  GET_PROFILES
+  GET_PROFILES,
+  GET_EDUCATION,
+  GET_EXPERIENCE
 } from "./types";
 
 //get current profile
@@ -22,7 +24,47 @@ export const getCurrentProfile = () => dispatch => {
     .catch(err =>
       dispatch({
         type: GET_PROFILE,
-        payload: {}
+        payload: []
+      })
+    );
+};
+
+//get current education
+export const getCurrentEducation = () => dispatch => {
+  dispatch(setProfileLoading());
+  axios
+    .get("/api/profile/education")
+    .then(res => {
+      dispatch({
+        type: GET_EDUCATION,
+        payload: res.data
+      })
+    }
+    )
+    .catch(err =>
+      dispatch({
+        type: GET_EDUCATION,
+        payload: []
+      })
+    );
+};
+
+//get current education
+export const getCurrentExperience = () => dispatch => {
+  dispatch(setProfileLoading());
+  axios
+    .get("/api/profile/experience")
+    .then(res => {
+      dispatch({
+        type: GET_EXPERIENCE,
+        payload: res.data
+      })
+    }
+    )
+    .catch(err =>
+      dispatch({
+        type: GET_EXPERIENCE,
+        payload: []
       })
     );
 };
@@ -86,12 +128,12 @@ export const addEducation = (eduData, history) => dispatch => {
 };
 
 //Delete experience
-export const deleteExperience = id => dispatch => {
+export const deleteExperience = (id) => dispatch => {
   axios
     .delete(`/api/profile/experience/${id}`)
-    .then(res =>
+    .then(res => 
       dispatch({
-        type: GET_PROFILE,
+        type: GET_EXPERIENCE,
         payload: res.data
       })
     )
@@ -104,12 +146,12 @@ export const deleteExperience = id => dispatch => {
 };
 
 //Delete education
-export const deleteEducation = id => dispatch => {
+export const deleteEducation = (id) => dispatch => {
   axios
     .delete(`/api/profile/education/${id}`)
-    .then(res =>
+    .then(res => 
       dispatch({
-        type: GET_PROFILE,
+        type: GET_EDUCATION,
         payload: res.data
       })
     )

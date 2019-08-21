@@ -37,6 +37,46 @@ router.get(
   }
 );
 
+//@route GET api/profile
+//@desc Get current user education
+//@access Private
+router.get(
+  "/experience",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const errors = {};
+    const userid = req.user.id
+    conn.query('Select * from experience WHERE userid = ?', userid, (err, experience)=> {
+        if(experience.length > 0) {
+          return res.json(experience);
+        } else {
+          errors.noexperience = "There is no experience for this user";
+          return res.status(404).json(errors);
+        }
+    }) 
+  }
+);
+
+//@route GET api/profile
+//@desc Get current user education
+//@access Private
+router.get(
+  "/education",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const errors = {};
+    const userid = req.user.id
+    conn.query('Select * from education WHERE userid = ?', userid, (err, education)=> {
+        if(education.length > 0) {
+          return res.json(education);
+        } else {
+          errors.noeducation = "There is no education for this user";
+          return res.status(404).json(errors);
+        }
+    }) 
+  }
+);
+
 //@route GET api/profile/all
 //@desc  Get all profiles
 //@access Public
@@ -169,21 +209,11 @@ router.post(
       current: req.body.current == false ? 0 : 1,
       description: req.body.description ? req.body.description : ""
     };
-    conn.query("Select * FROM experience WHERE userid = ?", userid, (err, experience)=> {
-      if(experience.length == 1) {
-        conn.query(`UPDATE experience SET ? WHERE userid=?`, [newExp, userid], (err, result) => {
-          conn.query("Select * from experience where userid = ?", userid, (err,exp)=> {
-            res.json(exp);
-          })
-         })      
-        } else {
-          conn.query('INSERT INTO experience SET ?', [newExp], (err, result)=> {
-            conn.query("Select * from experience where userid = ?", userid, (err,exp)=> {
-              res.json(exp);
-            })
-          })      
-        }
-    })
+    conn.query('INSERT INTO experience SET ?', [newExp], (err, result)=> {
+      conn.query("Select * from experience where userid = ?", userid, (err,exp)=> {
+        res.json(exp);
+      })
+    }) 
   }
 );
 
@@ -211,21 +241,11 @@ router.post(
       current: req.body.current == false ? 0 : 1,
       description: req.body.description ? req.body.description : ""
     };
-    conn.query("Select * FROM education WHERE userid = ?", userid, (err, education)=> {
-      if(education.length == 1) {
-        conn.query(`UPDATE education SET ? WHERE userid=?`, [newEdu, userid], (err, result) => {
-          conn.query("Select * from education where userid = ?", userid, (err,edu)=> {
-            res.json(edu);
-          })
-         })      
-        } else {
-          conn.query('INSERT INTO education SET ?', [newEdu], (err, result)=> {
-            conn.query("Select * from education where userid = ?", userid, (err,edu)=> {
-              res.json(edu);
-            })
-          })      
-        }
-    })
+    conn.query('INSERT INTO education SET ?', [newEdu], (err, result)=> {
+      conn.query("Select * from education where userid = ?", userid, (err,edu)=> {
+        res.json(edu);
+      })
+    })   
   }
 );
 
@@ -273,12 +293,19 @@ router.post(
 //@desc  Delete experience from profile
 //@access Private
 router.delete(
-  "/experience",
+  "/experience/:id",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
+    const expid = req.params.id;
     const userid = req.user.id;
-    conn.query('DELETE FROM experience WHERE userid=?', userid, (err, result)=> {
-      res.json("Experience informations deleted");
+    conn.query('DELETE FROM experience WHERE id=?', expid, (err, result)=> {
+      conn.query('Select * from experience WHERE userid = ?', userid, (err, experience)=> {
+        if(experience.length > 0) {
+          return res.json(experience);
+        } else {
+          return res.json([]);
+        }
+    })
     })
   }
 );
@@ -287,12 +314,19 @@ router.delete(
 //@desc  Delete education from profile
 //@access Private
 router.delete(
-  "/education",
+  "/education/:id",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
+    const eduid = req.params.id;
     const userid = req.user.id;
-    conn.query('DELETE FROM education WHERE userid=?', userid, (err, result)=> {
-      res.json("Education informations deleted");
+    conn.query('DELETE FROM education WHERE id=?', eduid, (err, result)=> {
+      conn.query('Select * from education WHERE userid = ?', userid, (err, education)=> {
+        if(education.length > 0) {
+          return res.json(education);
+        } else {
+          return res.json([]);
+        }
+    }) 
     })
   }
 );
