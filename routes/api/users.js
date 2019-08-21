@@ -128,6 +128,7 @@ router.delete(
     const userid = req.user.id;
     conn.query("DELETE FROM users WHERE id = ?", userid, (err, result)=> {
         res.json({msg: "User deleted"});
+        console.log(result);
     })
   }
 );

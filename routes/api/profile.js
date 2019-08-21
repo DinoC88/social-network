@@ -106,10 +106,16 @@ router.post(
     if (req.body.website) profileFields.website = req.body.website;
     if (req.body.location) profileFields.location = req.body.location;
     if (req.body.status) profileFields.status = req.body.status;
+    if (req.body.bio) profileFields.bio = req.body.bio;
     if (req.body.githubusername)
-      profileFields.githubusername = req.body.githubusername;
+      profileFields.github = req.body.githubusername;
     if(req.body.skills) profileFields.skills = req.body.skills;
-  
+    if(req.body.youtube) profileFields.youtube = req.body.youtube;
+    if(req.body.twitter) profileFields.twitter = req.body.twitter;
+    if(req.body.facebook) profileFields.facebook = req.body.facebook;
+    if(req.body.instagram) profileFields.instagram = req.body.instagram;
+    if(req.body.linkedin) profileFields.linkedin = req.body.linkedin;
+
     const userid = req.user.id;
     conn.query('Select * from profile WHERE userid = ?', userid, (err, profile)=> {
      if(profile.length == 1) {
@@ -263,7 +269,7 @@ router.post(
   }
 );
 
-//@route DELETE api/profile/experience/:exp_id
+//@route DELETE api/profile/experience
 //@desc  Delete experience from profile
 //@access Private
 router.delete(
@@ -277,7 +283,7 @@ router.delete(
   }
 );
 
-//@route DELETE api/profile/education/:edu_id
+//@route DELETE api/profile/education
 //@desc  Delete education from profile
 //@access Private
 router.delete(
