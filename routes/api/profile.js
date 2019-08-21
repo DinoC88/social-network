@@ -166,7 +166,7 @@ router.post(
       location: req.body.location ? req.body.location : "",
       from_date: req.body.from,
       to_date: req.body.to ? req.body.to : "",
-      current: req.body.current,
+      current: req.body.current == false ? 0 : 1,
       description: req.body.description ? req.body.description : ""
     };
     conn.query("Select * FROM experience WHERE userid = ?", userid, (err, experience)=> {
@@ -208,7 +208,7 @@ router.post(
       fieldofstudy: req.body.fieldofstudy,
       from_date: req.body.from,
       to_date: req.body.to ? req.body.to : "",
-      current: req.body.current,
+      current: req.body.current == false ? 0 : 1,
       description: req.body.description ? req.body.description : ""
     };
     conn.query("Select * FROM education WHERE userid = ?", userid, (err, education)=> {
