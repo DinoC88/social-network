@@ -44,7 +44,9 @@ router.post(
       userid: req.user.id
     };
     conn.query("INSERT INTO posts SET ?", newPost, (err, result)=> {
-      res.json({msg: "Post Created"});
+      conn.query("SELECT * FROM posts", (err, posts)=> {
+        res.json(posts)
+      })
   })
   }
 );
@@ -58,10 +60,9 @@ router.delete(
   (req, res) => {
     const postid = req.params.id;
     const userid = req.user.id;
-    console.log(postid)
+    
     conn.query("DELETE FROM posts WHERE id=? AND userid=?", [postid, userid], (err, result)=> {
       res.json({msg: "Post deleted"});
-      console.log(err)
   })
   }
 );
