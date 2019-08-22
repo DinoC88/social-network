@@ -50,6 +50,46 @@ export const getCurrentEducation = () => dispatch => {
 };
 
 //get current education
+export const getCurrentEducationById = (id) => dispatch => {
+  dispatch(setProfileLoading());
+  axios
+    .get(`/api/profile/educationbyid/${id}`)
+    .then(res => {
+      dispatch({
+        type: GET_EDUCATION,
+        payload: res.data
+      })
+    }
+    )
+    .catch(err =>
+      dispatch({
+        type: GET_EDUCATION,
+        payload: []
+      })
+    );
+};
+
+//get current education
+export const getCurrentExperienceById = (id) => dispatch => {
+  dispatch(setProfileLoading());
+  axios
+    .get(`/api/profile/experiencebyid/${id}`)
+    .then(res => {
+      dispatch({
+        type: GET_EXPERIENCE,
+        payload: res.data
+      })
+    }
+    )
+    .catch(err =>
+      dispatch({
+        type: GET_EXPERIENCE,
+        payload: []
+      })
+    );
+};
+
+//get current education
 export const getCurrentExperience = () => dispatch => {
   dispatch(setProfileLoading());
   axios

@@ -77,6 +77,40 @@ router.get(
   }
 );
 
+//@route GET api/profile/educationbyid/:id
+//@desc Get current user education
+//@access public
+router.get("/educationbyid/:id",  (req, res) => {
+    const errors = {};
+    const userid = req.params.id;
+    conn.query("SELECT * FROM education where userid=?", userid, (err, result)=> {
+      if(result.length > 0) {
+        return res.json(result);
+      } else {
+        return res.json([]);
+      }
+    })
+    
+  }
+);
+
+//@route GET api/profile/experiencebyid/:id
+//@desc Get current user experience
+//@access public
+router.get("/experiencebyid/:id",  (req, res) => {
+  const errors = {};
+  const userid = req.params.id;
+  conn.query("SELECT * FROM experience where userid=?", userid, (err, result)=> {
+    if(result.length > 0) {
+      return res.json(result);
+    } else {
+      return res.json([]);
+    }
+  })
+  
+}
+);
+
 //@route GET api/profile/all
 //@desc  Get all profiles
 //@access Public
@@ -98,28 +132,12 @@ router.get("/all", (req, res) => {
 router.get("/handle/:handle", (req, res) => {
   const errors = {};
   const checkHandle = req.params.handle;
-  conn.query('Select * FROM profile WHERE handle = ?', checkHandle, (err, profile)=> {
+  conn.query('select profile.*, users.name, users.avatar from profile join users on profile.userid = users.id WHERE profile.userid = ?', checkHandle, (err, profile)=> {
     if(profile.length == 0) {
       errors.noprofile = "There is no profile for this user";
-      res.status(404).json(errors);
+      return res.status(404).json(errors);
     } else {
-    res.json(profile);
-    }
-  })
-});
-
-//@route GET api/profile/user/:user_id
-//@desc  Get profile by id
-//@access Public
-router.get("/user/:user_id", (req, res) => {
-  const errors = {};
-  const userid = req.params.user_id;
-  conn.query('Select * FROM profile WHERE userid = ?', userid, (err, profile)=> {
-    if(profile.length == 0) {
-      errors.noprofile = "There is no profile for this user";
-      res.status(404).json(errors);
-    } else {
-    res.json(profile);
+      return res.json(profile);
     }
   })
 });

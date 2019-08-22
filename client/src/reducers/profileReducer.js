@@ -4,7 +4,7 @@ import {
   CLEAR_CURRENT_PROFILE,
   GET_PROFILES,
   GET_EDUCATION,
-  GET_EXPERIENCE
+  GET_EXPERIENCE,
 } from "../actions/types";
 
 const initialState = {
