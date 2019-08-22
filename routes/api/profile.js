@@ -82,7 +82,7 @@ router.get(
 //@access Public
 router.get("/all", (req, res) => {
   const errors = {};
-  conn.query('Select * FROM profile', (err, profiles)=> {
+  conn.query('select profile.*, users.name, users.avatar from profile join users on profile.userid = users.id ', (err, profiles)=> {
     if(profiles.length == 0) {
       errors.noprofile = "There is no profiles";
       res.status(404).json(errors);
