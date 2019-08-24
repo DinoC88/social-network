@@ -4,7 +4,7 @@ img {
 
 .landing {
 	position: relative;
-	background: url('./img/showcase.jpg') no-repeat;
+	background: url('./img/devnet1.jpg') no-repeat;
 	background-size: cover;
 	background-position: center;
 	height: 100vh;
@@ -36,4 +36,25 @@ img {
 
 .form-control::placeholder {
 	color: #bbb !important;
+}
+
+html {
+	font-size: 1rem;
+}
+
+@media (max-width: 768px) {
+	html {
+		font-size: 0.65rem;
+	}
+}
+
+@media (max-width: 992px) {
+	html {
+		font-size: 0.85rem;
+	}
+}
+@media (min-width: 1200px) {
+	html {
+		font-size: 1rem;
+	}
 }

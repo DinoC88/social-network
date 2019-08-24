@@ -24,7 +24,7 @@ class Profiles extends Component {
       }
     }
     return (
-      <div className="profiles">
+      <div style={{minHeight: "100vh"}} className="profiles">
         <div className="container">
           <div className="row">
             <div className="col-md-12">

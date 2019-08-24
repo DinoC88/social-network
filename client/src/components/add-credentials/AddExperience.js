@@ -51,7 +51,7 @@ class AddExperience extends Component {
   render() {
     const { errors } = this.props;
     return (
-      <div className="add-experience">
+      <div style={{minHeight: "100vh"}} className="add-experience">
         <div className="container">
           <div className="row">
             <div className="col-md-8 m-auto">

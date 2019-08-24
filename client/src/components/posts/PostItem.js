@@ -6,6 +6,7 @@ import { deletePost} from "../../actions/postActions";
 class PostItem extends Component {
   render() {
     const {post, auth} = this.props;
+
     return (
       <div key={post.id} className="card card-body mb-3">
         <div className="row">
@@ -18,7 +19,7 @@ class PostItem extends Component {
           </div>
           <div className="col-md-10">
             <p className="lead">{post.text}</p>
-              {post.userid === auth.user.id ? (
+              {post.userid  === auth.user.id ? (
                 <button 
                   onClick={async () => await this.props.deletePost(post.id)}
                   type="button" className="btn btn-danger mr-1">

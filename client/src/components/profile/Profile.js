@@ -6,17 +6,17 @@ import ProfileHeader from "./ProfileHeader";
 import ProfileCreds from "./ProfileCreds";
 import Spinner from "../common/Spinner";
 import PropTypes from "prop-types";
-import { getProfileByHandle, getCurrentEducationById, getCurrentExperienceById } from "../../actions/profileActions";
+import { getProfileByid, getCurrentEducationById, getCurrentExperienceById } from "../../actions/profileActions";
 
 class Profile extends Component {
   componentDidMount() {
-    if (this.props.match.params.handle) {
-      this.props.getProfileByHandle(this.props.match.params.handle);
-      this.props.getCurrentEducationById(this.props.match.params.handle);
-      this.props.getCurrentExperienceById(this.props.match.params.handle);
+    if (this.props.match.params.id) {
+      this.props.getProfileByid(this.props.match.params.id);
+      this.props.getCurrentEducationById(this.props.match.params.id);
+      this.props.getCurrentExperienceById(this.props.match.params.id);
     }
   }
-
+  
   componentWillReceiveProps(nextProps) {
     if (nextProps.profile.profile === null && this.props.profile.loading) {
       this.props.history.push("/not-found");
@@ -25,7 +25,7 @@ class Profile extends Component {
   render() {
     const { profile, loading, education, experience } = this.props.profile;
     let profileContent;
-
+    
     if (profile === null || loading) {
       profileContent = <Spinner />;
     } else {
@@ -49,7 +49,7 @@ class Profile extends Component {
       );
     }
     return (
-      <div className="profile">
+      <div style={{minHeight: "100vh"}} className="profile">
         <div className="container">
           <div className="row">
             <div className="col-md-12">{profileContent}</div>
@@ -62,7 +62,7 @@ class Profile extends Component {
 
 Profile.propTypes = {
   profile: PropTypes.object.isRequired,
-  getProfileByHandle: PropTypes.func.isRequired,
+  getProfileByid: PropTypes.func.isRequired,
   getCurrentEducationById: PropTypes.func.isRequired,
   getCurrentExperienceById: PropTypes.func.isRequired,
 };
@@ -74,5 +74,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { getProfileByHandle, getCurrentEducationById, getCurrentExperienceById }
+  { getProfileByid, getCurrentEducationById, getCurrentExperienceById }
 )(Profile);

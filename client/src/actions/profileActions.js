@@ -109,11 +109,11 @@ export const getCurrentExperience = () => dispatch => {
     );
 };
 
-//get profile by handle
-export const getProfileByHandle = handle => dispatch => {
+//get profile by id
+export const getProfileByid = id => dispatch => {
   dispatch(setProfileLoading());
   axios
-    .get(`/api/profile/handle/${handle}`)
+    .get(`/api/profile/${id}`)
     .then(res =>
       dispatch({
         type: GET_PROFILE,

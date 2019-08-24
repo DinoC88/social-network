@@ -22,12 +22,14 @@ class Experience extends Component {
           )}
         </td>
         <td>
-          <button
-            onClick={this.onDeleteClick.bind(this, exp.id)}
-            className="btn btn-danger"
-          >
-            Delete
-          </button>
+          <div className="d-none d-md-block">
+            <button
+              onClick={this.onDeleteClick.bind(this, exp.id)}
+              className="btn btn-danger"
+            >
+              Delete
+            </button>
+          </div>
         </td>
       </tr>
     )) : null;

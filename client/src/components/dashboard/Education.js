@@ -22,12 +22,14 @@ class Education extends Component {
           )}
         </td>
         <td>
+        <div className="d-none d-md-block">
           <button
             onClick={this.onDeleteClick.bind(this, edu.id)}
             className="btn btn-danger"
           >
             Delete
-          </button>
+        </button>
+          </div>
         </td>
       </tr>
     )): null;

@@ -51,7 +51,7 @@ class AddEducation extends Component {
   render() {
     const { errors } = this.props;
     return (
-      <div className="add-education">
+      <div style={{minHeight: "100vh"}} className="add-education">
         <div className="container">
           <div className="row">
             <div className="col-md-8 m-auto">
