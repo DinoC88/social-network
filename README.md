@@ -4,7 +4,7 @@ Small social network for developers build with Node, Express and MySQL for back-
 
 You can create profile with education and experience, view others profile, make comments and delete them...
 
-View demo <a href="https://devnet12.herokuapp.com/">here</a> or go to "Installation and Usage" and follow the instructions to install and use.
+View demo live <a href="https://devnet12.herokuapp.com/">here</a> or go to "Installation and Usage" and follow the instructions to install and use.
 
 ## Technologies & Tools
 
