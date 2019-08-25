@@ -38,7 +38,7 @@ $ npm install
 $ cd client
 $ npm install
 ```
-3. In server/config create a keys.js with:<br/>
+3. In server/config create a keys.js with database info:<br/>
 ```
 module.exports = {
   secretOrKey: "YOUR_OWN_SECRET",
