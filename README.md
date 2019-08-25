@@ -25,7 +25,7 @@ View live demo <a href="https://devnet12.herokuapp.com/">here</a> or go to "Inst
 ### Requirements:
 * Node.js installed
 
-I have used XAMPP for database server. Informations for creating MySQL tables are in sql folder.
+I am using XAMPP for database server. Informations for creating MySQL tables are in sql folder.
 
 ### Quick start: 
 1. Install server-side dependencies:
