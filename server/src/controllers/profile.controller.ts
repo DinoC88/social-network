@@ -171,15 +171,15 @@ export async function createProfile(req: Request, res: Response): Promise<Respon
 		const conn = await connect();
 		await conn.query(
 			'Select * from profile WHERE userid =' + mysql.escape(userid),
-			async (err: Error, profile: IProfile) => {
-				if (profile) {
+			async (err: Error, profile: any) => {
+				if (profile.length > 0) {
 					let sql = SqlString.format(`UPDATE profile SET ? WHERE userid=?`, [ profileFields, userid ]);
 					const conn = await connect();
 					await conn.query(sql, async (err: Error, result: any) => {
 						const conn = await connect();
 						await conn.query(
 							'Select * from profile where userid =' + mysql.escape(userid),
-							(err: Error, resp: IProfile) => {
+							(err: Error, resp: any) => {
 								res.json(resp);
 							}
 						);
@@ -198,9 +198,10 @@ export async function createProfile(req: Request, res: Response): Promise<Respon
 								await conn.query(
 									'INSERT INTO profile SET' + mysql.escape(profileFields),
 									async (err: Error, result: any) => {
-										conn.query(
+										const conn = await connect();
+										await conn.query(
 											'Select * from profile where userid =' + mysql.escape(userid),
-											(err: Error, resp: IProfile) => {
+											(err: Error, resp: any) => {
 												res.json(resp);
 											}
 										);

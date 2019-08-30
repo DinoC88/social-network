@@ -19,7 +19,7 @@ class CreateProfile extends Component {
       location: "",
       status: "",
       skills: "",
-      githubusername: "",
+      github: "",
       bio: "",
       twitter: "",
       facebook: "",
@@ -39,7 +39,7 @@ class CreateProfile extends Component {
       location: this.state.location,
       status: this.state.status,
       skills: this.state.skills,
-      githubusername: this.state.githubusername,
+      github: this.state.github,
       bio: this.state.bio,
       twitter: this.state.twitter,
       facebook: this.state.facebook,
@@ -173,7 +173,7 @@ class CreateProfile extends Component {
                   value={this.state.location}
                   onChange={this.onChange}
                   error={errors.location}
-                  info="City or city & state suggested (eg. Boston, MA)"
+                  info="City and state suggested"
                 />
                 <TextFieldGroup
                   placeholder="* Skills"
@@ -185,12 +185,12 @@ class CreateProfile extends Component {
                     HTML,CSS,JavaScript,PHP"
                 />
                 <TextFieldGroup
-                  placeholder="Github Username"
-                  name="githubusername"
-                  value={this.state.githubusername}
+                  placeholder="Github Name"
+                  name="github"
+                  value={this.state.github}
                   onChange={this.onChange}
-                  error={errors.githubusername}
-                  info="If you want your latest repos and a Github link, include your username"
+                  error={errors.github}
+                  info="Your GitHub Link"
                 />
                 <TextAreaFieldGroup
                   placeholder="Short Bio"

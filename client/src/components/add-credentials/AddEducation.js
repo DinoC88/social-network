@@ -13,8 +13,8 @@ class AddEducation extends Component {
       school: "",
       degree: "",
       fieldofstudy: "",
-      from: "",
-      to: "",
+      from_date: "",
+      to_date: "",
       current: false,
       description: "",
       errors: {},
@@ -29,8 +29,8 @@ class AddEducation extends Component {
       school: this.state.school,
       degree: this.state.degree,
       fieldofstudy: this.state.fieldofstudy,
-      from: this.state.from,
-      to: this.state.to,
+      from_date: this.state.from_date,
+      to_date: this.state.to_date,
       current: this.state.current,
       description: this.state.description
     };
@@ -87,19 +87,19 @@ class AddEducation extends Component {
                 />
                 <h6>From Date</h6>
                 <TextFieldGroup
-                  name="from"
+                  name="from_date"
                   type="date"
-                  value={this.state.from}
+                  value={this.state.from_date}
                   onChange={this.onChange}
-                  error={errors.from}
+                  error={errors.from_date}
                 />
                 <h6>To Date</h6>
                 <TextFieldGroup
-                  name="to"
+                  name="to_date"
                   type="date"
-                  value={this.state.to}
+                  value={this.state.to_date}
                   onChange={this.onChange}
-                  error={errors.to}
+                  error={errors.to_date}
                   disabled={this.state.disabled ? "disabled" : ""}
                 />
                 <div className="form-check mb-4">

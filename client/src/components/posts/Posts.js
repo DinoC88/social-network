@@ -7,13 +7,12 @@ import { getPosts } from '../../actions/postActions';
 import PostItem from "./PostItem"
 
 class Posts extends Component {
-  componentDidMount() {
-    this.props.getPosts();
+  async componentDidMount() {
+    await this.props.getPosts();
   }
   render() {
     const { posts, loading } = this.props.post
     let postContent;
-
     if(posts === null || loading) {
       postContent = <Spinner />
     } else {
