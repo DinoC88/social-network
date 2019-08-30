@@ -4,7 +4,7 @@ Small social network for developers build with Node, Express and MySQL for back-
 
 You can create profile with education and experience, view others profile, make comments and delete them...
 
-View demo <a href="https://devnet12.herokuapp.com/">here</a> or go to "Installation and Usage" and follow the instructions to install and use.
+View live demo <a href="https://devnet12.herokuapp.com/">here</a> or go to "Installation and Usage" and follow the instructions to install and use.
 
 ## Technologies & Tools
 
@@ -25,7 +25,7 @@ View demo <a href="https://devnet12.herokuapp.com/">here</a> or go to "Installat
 ### Requirements:
 * Node.js installed
 
-I have used XAMPP for database server. Informations for creating MySQL tables are in sql folder.
+I am using XAMPP for database server. Informations for creating MySQL tables are in sql folder.
 
 ### Quick start: 
 1. Install server-side dependencies:
@@ -38,7 +38,7 @@ $ npm install
 $ cd client
 $ npm install
 ```
-3. In server/config create a keys.js with:<br/>
+3. In server/config create a keys.js with database info:<br/>
 ```
 module.exports = {
   secretOrKey: "YOUR_OWN_SECRET",
