@@ -39,7 +39,7 @@ $ npm install
 $ cd client
 $ npm install
 ```
-3. In server/config create a keys.js with database info:<br/>
+3. In server/config create a keys.ts with database info:<br/>
 ```
 export default {
   secretOrKey: "YOUR_OWN_SECRET",
@@ -60,5 +60,5 @@ $ npm run start
 5. Start your server
 ```
 $ cd server
-$ npm run dev
+$ npm run server
 ```
