@@ -1,6 +1,6 @@
 ## Description
 
-Small social network for developers build with Node, Express and MySQL for back-end and React, Redux and Bootstrap for front-end.
+Small social network for developers build with Node, TypeScript, Express and MySQL for back-end and React, JavaScript, Redux and Bootstrap for front-end.
 
 You can create profile with education and experience, view others profile, make comments and delete them...
 
@@ -10,15 +10,16 @@ View live demo <a href="https://devnet12.herokuapp.com/">here</a> or go to "Inst
 
 ### Front-end:
 * React
+* JavaScript
 * Redux
 * Bootstrap
 * Axios
 
 ### Backend:
 * Node
+* TypeScript
 * MySQL
 * Express
-* Passport
 
 ## Installation and Usage
 
@@ -40,7 +41,7 @@ $ npm install
 ```
 3. In server/config create a keys.js with database info:<br/>
 ```
-module.exports = {
+export default {
   secretOrKey: "YOUR_OWN_SECRET",
   mysqlInfo: {
     host: 'YOUR_LOCALHOST',
@@ -59,5 +60,5 @@ $ npm run start
 5. Start your server
 ```
 $ cd server
-$ npm run server
+$ npm run dev
 ```
