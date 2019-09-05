@@ -24,7 +24,6 @@ export async function testProfileRoute(req: Request, res: Response): Promise<Res
 export async function getCurrentProfile(req: Request, res: Response): Promise<Response | void> {
 	const errors: any = {};
 	const userid = res.locals.jwtPayload.id;
-	console.log(userid);
 	const conn = await connect();
 	await conn.query('Select * from profile WHERE userid =' + mysql.escape(userid), (err: Error, profile: any) => {
 		if (profile) {
@@ -36,7 +35,7 @@ export async function getCurrentProfile(req: Request, res: Response): Promise<Re
 	});
 }
 
-//@route GET api/profile
+//@route GET api/experience
 //@desc Get current user education
 //@access Private
 export async function getCurrentExperience(req: Request, res: Response): Promise<Response | void> {
@@ -53,7 +52,7 @@ export async function getCurrentExperience(req: Request, res: Response): Promise
 	});
 }
 
-//@route GET api/profile
+//@route GET api/education
 //@desc Get current user education
 //@access Private
 export async function getCurrentEducation(req: Request, res: Response): Promise<Response | void> {
@@ -92,7 +91,7 @@ export async function getExperienceById(req: Request, res: Response): Promise<Re
 	const userid = req.params.id;
 	const conn = await connect();
 	await conn.query('SELECT * FROM experience where userid=' + mysql.escape(userid), (err: Error, result: any) => {
-		if (result.length > 0) {
+		if (result !== undefined) {
 			return res.json(result);
 		} else {
 			return res.json([]);
@@ -235,7 +234,7 @@ export async function createExperience(req: Request, res: Response): Promise<Res
 		company: req.body.company,
 		location: req.body.location ? req.body.location : '',
 		from_date: req.body.from_date,
-		to_date: req.body.to ? req.body.to_date : '',
+		to_date: req.body.to_date ? req.body.to_date : '',
 		current: req.body.current == false ? 0 : 1,
 		description: req.body.description ? req.body.description : ''
 	};
@@ -268,6 +267,8 @@ export async function createEducation(req: Request, res: Response): Promise<Resp
 		current: req.body.current == false ? 0 : 1,
 		description: req.body.description ? req.body.description : ''
 	};
+	console.log(req.body);
+
 	const conn = await connect();
 	await conn.query('INSERT INTO education SET' + mysql.escape(newEdu), (err: Error, result: any) => {
 		conn.query('Select * from education where userid =' + mysql.escape(userid), (err: Error, edu: IEducation) => {
@@ -280,7 +281,7 @@ export async function createEducation(req: Request, res: Response): Promise<Resp
 //@desc  Delete experience from profile
 //@access Private
 export async function deleteExperience(req: Request, res: Response): Promise<Response | void> {
-	const expid: number = req.params.id;
+	const expid: any = req.params.id;
 	const userid: number = res.locals.jwtPayload.id;
 	const conn = await connect();
 	await conn.query('DELETE FROM experience WHERE id=' + mysql.escape(expid), async (err: Error, result: any) => {
@@ -302,7 +303,7 @@ export async function deleteExperience(req: Request, res: Response): Promise<Res
 //@desc  Delete education from profile
 //@access Private
 export async function deleteEducation(req: Request, res: Response): Promise<Response | void> {
-	const eduid: number = req.params.id;
+	const eduid: any = req.params.id;
 	const userid: number = res.locals.jwtPayload.id;
 	const conn = await connect();
 	await conn.query('DELETE FROM education WHERE id=' + mysql.escape(eduid), async (err: Error, result: any) => {

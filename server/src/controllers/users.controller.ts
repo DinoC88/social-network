@@ -61,7 +61,8 @@ export async function loginUser(req: Request, res: Response): Promise<Response |
 	const conn = await connect();
 	await conn.query(`Select * from users where email=` + mysql.escape(email), (err: Error, user: any) => {
 		if (user[0] === undefined) {
-			res.json({ error: 'User not found' });
+			errors.email = 'Email not found';
+			return res.status(404).json(errors);
 		} else {
 			bcrypt.compare(password, user[0].password, (err, passCheck) => {
 				if (passCheck) {

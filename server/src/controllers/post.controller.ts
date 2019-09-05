@@ -46,7 +46,7 @@ export async function createPost(req: Request, res: Response) {
 //@desc   Delete post
 //@access Private
 export async function deletePost(req: Request, res: Response) {
-	const id: number = req.params.id;
+	const id: any = req.params.id;
 	const userid: number = res.locals.jwtPayload.id;
 	const conn = await connect();
 	await conn.query('DELETE FROM posts WHERE id = ? and userid = ?', [ id, userid ]);
