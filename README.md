@@ -1,32 +1,29 @@
 ## Description
 
-Small social network for developers build with Node, TypeScript, Express and MySQL for back-end and React, JavaScript, Redux and Bootstrap for front-end.
+Small social network for developers build with Typescript and Node, Express and MySQL for back-end and React, Redux and Bootstrap for front-end.
 
 You can create profile with education and experience, view others profile, make comments and delete them...
 
-View live demo <a href="https://devnet12.herokuapp.com/">here</a> or go to "Installation and Usage" and follow the instructions to install and use.
+View live demo ##<a href="https://devnet12.herokuapp.com/">here</a> or go to "Installation and Usage" and follow the instructions to install and use.
 
 ## Technologies & Tools
 
 ### Front-end:
 * React
-* JavaScript
 * Redux
 * Bootstrap
 * Axios
 
 ### Backend:
 * Node
-* TypeScript
 * MySQL
 * Express
 
 ## Installation and Usage
 
 ### Requirements:
-* Node.js installed
 
-I am using XAMPP for database server. Informations for creating MySQL tables are in sql folder.
+* I am using XAMPP for database server. Informations for creating MySQL tables are in sql folder.
 
 ### Quick start: 
 1. Install server-side dependencies:
