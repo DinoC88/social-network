@@ -33,6 +33,7 @@ interface CreateProfileState {
 }
 type Props = CreateProfileProps & LinkDispatchProps & LinkStateProp;
 
+
 class CreateProfile extends Component<Props, CreateProfileState> {
   constructor(props: Props) {
     super(props);

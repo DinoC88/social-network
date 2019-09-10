@@ -13,8 +13,6 @@ import { AppActions } from "../../types/types";
 import { ThunkDispatch } from "redux-thunk";
 import { bindActionCreators } from "redux";
 
-
-
 interface EditProfileProps {
 	history: History;
 }

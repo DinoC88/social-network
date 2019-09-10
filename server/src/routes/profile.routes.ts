@@ -1,19 +1,19 @@
 import { Router } from 'express';
 import { checkJwt } from '../config/checkJwt';
 import {
-	testProfileRoute,
-	getCurrentProfile,
-	getCurrentExperience,
-	getCurrentEducation,
-	getEducationById,
-	getExperienceById,
-	getAllProfiles,
-	getProfile,
-	createProfile,
-	createExperience,
-	createEducation,
-	deleteExperience,
-	deleteEducation
+  testProfileRoute,
+  getCurrentProfile,
+  getCurrentExperience,
+  getCurrentEducation,
+  getEducationById,
+  getExperienceById,
+  getAllProfiles,
+  getProfile,
+  createProfile,
+  createExperience,
+  createEducation,
+  deleteExperience,
+  deleteEducation
 } from '../controllers/profile.controller';
 const router = Router();
 

@@ -15,46 +15,46 @@ interface PostsState {}
 type Props = PostsProps & LinkDispatchProps & LinkStateProp;
 
 class Posts extends Component<Props, PostsState> {
-	async componentDidMount() {
-		await this.props.getPosts();
-	}
-	render() {
-		const { posts, isLoading } = this.props;
-		let postContent;
-		if (posts === null || isLoading) {
-			postContent = <Spinner />;
-		} else {
-			postContent = posts.map((post: any) => <PostItem key={post.id} post={post} />);
-		}
-		return (
-			<div style={{ minHeight: '100vh' }} className="feed">
-				<div className="container">
-					<div className="row">
-						<div className="col-md-12">
-							<PostForm />
-							<div>{postContent}</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		);
-	}
+  async componentDidMount() {
+    await this.props.getPosts();
+  }
+  render() {
+    const { posts, isLoading } = this.props;
+    let postContent;
+    if (posts === null || isLoading) {
+      postContent = <Spinner />;
+    } else {
+      postContent = posts.map((post: any) => <PostItem key={post.id} post={post} />);
+    }
+    return (
+      <div style={{ minHeight: '100vh' }} className="feed">
+        <div className="container">
+          <div className="row">
+            <div className="col-md-12">
+              <PostForm />
+              <div>{postContent}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 }
 
 interface LinkStateProp {
-	posts: any;
-	isLoading: boolean;
+  posts: any;
+  isLoading: boolean;
 }
 interface LinkDispatchProps {
-	getPosts: () => any;
+  getPosts: () => any;
 }
 
 const mapStateToProps = (state: AppState): LinkStateProp => ({
-	posts: state.posts.posts,
-	isLoading: state.posts.isLoading
+  posts: state.posts.posts,
+  isLoading: state.posts.isLoading
 });
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AppActions>, props: PostsProps): LinkDispatchProps => ({
-	getPosts: bindActionCreators(getPosts, dispatch)
+  getPosts: bindActionCreators(getPosts, dispatch)
 });
 export default connect(mapStateToProps, mapDispatchToProps)(Posts);

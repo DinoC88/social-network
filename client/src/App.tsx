@@ -24,49 +24,49 @@ import AddExperience from './components/add-credentials/AddExperience';
 import Posts from './components/posts/Posts';
 //Check for token
 if (localStorage.jwtToken !== undefined) {
-	//Set auth token
-	setAuthToken(localStorage.jwtToken);
-	//Decode token and get user info and exp
-	const decoded: any = jwt_decode(localStorage.jwtToken);
-	//Set user and isAuthenticated
-	store.dispatch(setCurrentUser(decoded));
-	const currentTime = Date.now() / 1000;
-	if (decoded.exp < currentTime) {
-		//Logout user
-		localStorage.removeItem('jwtToken');
-		setAuthToken(false);
-		store.dispatch({
-			type: SET_CURRENT_USER,
-			payload: {}
-		});
-		//Redirect to login
-		window.location.href = '/login';
-	}
+  //Set auth token
+  setAuthToken(localStorage.jwtToken);
+  //Decode token and get user info and exp
+  const decoded: any = jwt_decode(localStorage.jwtToken);
+  //Set user and isAuthenticated
+  store.dispatch(setCurrentUser(decoded));
+  const currentTime = Date.now() / 1000;
+  if (decoded.exp < currentTime) {
+    //Logout user
+    localStorage.removeItem('jwtToken');
+    setAuthToken(false);
+    store.dispatch({
+      type: SET_CURRENT_USER,
+      payload: {}
+    });
+    //Redirect to login
+    window.location.href = '/login';
+  }
 }
 
 class App extends React.Component {
-	render() {
-		return (
-			<Provider store={store}>
-				<Router>
-					<Navbar />
-					<Switch>
-						<Route exact path="/" component={Landing} />
-						<Route exact path="/register" component={Register} />
-						<Route exact path="/login" component={Login} />
-						<Route exact path="/profiles" component={Profiles} />
-						<Route exact path="/profile/:id" component={Profile} />
-						<PrivateRoute path="/dashboard" component={Dashboard} />
-						<PrivateRoute path="/create-profile" component={CreateProfile} />
-						<PrivateRoute path="/edit-profile" component={EditProfile} />
-						<PrivateRoute exact path="/add-education" component={AddEducation} />
-						<PrivateRoute exact path="/add-experience" component={AddExperience} />
-						<PrivateRoute exact path="/feed" component={Posts} />
-					</Switch>
-					<Footer />
-				</Router>
-			</Provider>
-		);
-	}
+  render() {
+    return (
+      <Provider store={store}>
+        <Router>
+          <Navbar />
+          <Switch>
+            <Route exact path="/" component={Landing} />
+            <Route exact path="/register" component={Register} />
+            <Route exact path="/login" component={Login} />
+            <Route exact path="/profiles" component={Profiles} />
+            <Route exact path="/profile/:id" component={Profile} />
+            <PrivateRoute path="/dashboard" component={Dashboard} />
+            <PrivateRoute path="/create-profile" component={CreateProfile} />
+            <PrivateRoute path="/edit-profile" component={EditProfile} />
+            <PrivateRoute exact path="/add-education" component={AddEducation} />
+            <PrivateRoute exact path="/add-experience" component={AddExperience} />
+            <PrivateRoute exact path="/feed" component={Posts} />
+          </Switch>
+          <Footer />
+        </Router>
+      </Provider>
+    );
+  }
 }
 export default App;

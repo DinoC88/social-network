@@ -3,21 +3,21 @@ import isEmpty from './is-empty';
 import { IPost } from '../interface/IPost.interface';
 
 function validatePostInput(data: IPost) {
-	const errors: any = {};
+  const errors: any = {};
 
-	data.text = !isEmpty(data.text) ? data.text : '';
+  data.text = !isEmpty(data.text) ? data.text : '';
 
-	if (!Validator.isLength(data.text, { min: 10, max: 300 })) {
-		errors.text = 'Post must be between 10 and 300 characters';
-	}
+  if (!Validator.isLength(data.text, { min: 10, max: 300 })) {
+    errors.text = 'Post must be between 10 and 300 characters';
+  }
 
-	if (Validator.isEmpty(data.text)) {
-		errors.text = 'Text field is required';
-	}
-	return {
-		errors,
-		isValid: isEmpty(errors)
-	};
+  if (Validator.isEmpty(data.text)) {
+    errors.text = 'Text field is required';
+  }
+  return {
+    errors,
+    isValid: isEmpty(errors)
+  };
 }
 
 export default validatePostInput;
