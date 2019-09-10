@@ -4,7 +4,7 @@ Small social network for developers build with Typescript and Node, Express and 
 
 You can create profile with education and experience, view others profile, make comments and delete them...
 
-View live demo ##<a href="https://devnet12.herokuapp.com/">here</a> or go to "Installation and Usage" and follow the instructions to install and use.
+View live demo <a href="https://devnet12.herokuapp.com/">here</a> or go to "Installation and Usage" and follow the instructions to install and use.
 
 ## Technologies & Tools
 
@@ -23,7 +23,7 @@ View live demo ##<a href="https://devnet12.herokuapp.com/">here</a> or go to "In
 
 ### Requirements:
 
-* I am using XAMPP for database server. Informations for creating MySQL tables are in sql folder.
+* Install web server. I am using XAMPP for database server. Informations for creating MySQL tables are in sql folder.
 
 ### Quick start: 
 1. Install server-side dependencies:
