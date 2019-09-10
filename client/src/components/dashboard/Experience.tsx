@@ -11,7 +11,7 @@ interface ExperienceProps {}
 interface ExperienceState {}
 
 type Props = ExperienceProps & LinkDispatchProps & LinkStateProp;
-//identation test
+
 class Experience extends Component<Props, ExperienceState> {
 	onDeleteClick(id: number) {
 		this.props.deleteExperience(id);
