@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Spinner from '../common/Spinner';
-import { getPosts } from '../../actions/postActions';
 import { ThunkDispatch } from 'redux-thunk';
 import { AppActions } from '../../types/types';
 import { AppState } from '../../reducers';
 import { bindActionCreators } from 'redux';
 import PostItem from './PostItem';
 import PostForm from './PostForm';
-
+import { getPostsRequest } from '../../actions/postActions';
+import { selectPosts, selectIsLoadingPosts } from '../../selectors/selectors';
 interface PostsProps {}
 interface PostsState {}
 
@@ -16,7 +16,7 @@ type Props = PostsProps & LinkDispatchProps & LinkStateProp;
 
 class Posts extends Component<Props, PostsState> {
   async componentDidMount() {
-    await this.props.getPosts();
+    await this.props.getPostsRequest();
   }
   render() {
     const { posts, isLoading } = this.props;
@@ -46,15 +46,15 @@ interface LinkStateProp {
   isLoading: boolean;
 }
 interface LinkDispatchProps {
-  getPosts: () => any;
+  getPostsRequest: () => any;
 }
 
 const mapStateToProps = (state: AppState): LinkStateProp => ({
-  posts: state.posts.posts,
-  isLoading: state.posts.isLoading
+  posts: selectPosts(state),
+  isLoading: selectIsLoadingPosts(state)
 });
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AppActions>, props: PostsProps): LinkDispatchProps => ({
-  getPosts: bindActionCreators(getPosts, dispatch)
+  getPostsRequest: bindActionCreators(getPostsRequest, dispatch)
 });
 export default connect(mapStateToProps, mapDispatchToProps)(Posts);

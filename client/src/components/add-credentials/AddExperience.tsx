@@ -3,12 +3,13 @@ import { Link, withRouter } from 'react-router-dom';
 import TextFieldGroup from '../common/TextFieldGroup';
 import TextAreaFieldGroup from '../common/TextAreaFieldGroup';
 import { connect } from 'react-redux';
-import { addExperience } from '../../actions/profileActions';
 import { History } from 'history';
 import { AppState } from '../../reducers';
 import { AppActions } from '../../types/types';
 import { ThunkDispatch } from 'redux-thunk';
 import { bindActionCreators } from 'redux';
+import { addExpRequest } from '../../actions/profileActions';
+import { selectErrors, selectProfile } from '../../selectors/selectors';
 
 interface AddExperienceProps {
   history: History;
@@ -53,7 +54,7 @@ class AddExperience extends Component<Props, AddExperienceState> {
       description: this.state.description
     };
 
-    this.props.addExperience(expData, this.props.history);
+    this.props.addExpRequest(expData, this.props.history);
   };
 
   onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -130,6 +131,7 @@ class AddExperience extends Component<Props, AddExperienceState> {
                     checked={this.state.current}
                     onChange={this.onCheck}
                     id="current"
+                    required={this.state.to_date ? false : true}
                   />
                   <label htmlFor="current" className="form-check-label">
                     Current
@@ -158,19 +160,19 @@ interface LinkStateProp {
   error: any;
 }
 interface LinkDispatchProps {
-  addExperience: (eduData: any, history: any) => any;
+  addExpRequest: (eduData: any, history: any) => any;
 }
 
 const mapStateToProps = (state: AppState): LinkStateProp => ({
-  profile: state.profile.profiletest[0],
-  error: state.error
+  profile: selectProfile(state),
+  error: selectErrors(state)
 });
 
 const mapDispatchToProps = (
   dispatch: ThunkDispatch<any, any, AppActions>,
   props: AddExperienceState
 ): LinkDispatchProps => ({
-  addExperience: bindActionCreators(addExperience, dispatch)
+  addExpRequest: bindActionCreators(addExpRequest, dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(AddExperience as any));

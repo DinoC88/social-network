@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { getProfiles } from '../../actions/profileActions';
 import { AppState } from '../../reducers';
 import { ThunkDispatch } from 'redux-thunk';
 import { AppActions } from '../../types/types';
@@ -8,6 +7,8 @@ import { bindActionCreators } from 'redux';
 import Spinner from '../common/Spinner';
 import ProfileItem from './ProfileItem';
 import { IProfile } from '../../interface/profile.interface';
+import { requestProfiles } from '../../actions/profileActions';
+import { selectProfiles, selectIsProfileLoading } from '../../selectors/selectors';
 
 interface ProfilesProps {}
 interface ProfilesState {}
@@ -16,7 +17,7 @@ type Props = ProfilesProps & LinkDispatchProps & LinkStateProp;
 
 class Profiles extends React.Component<Props, ProfilesState> {
   componentDidMount() {
-    this.props.getProfiles();
+    this.props.requestProfiles();
   }
   render() {
     const { profile, isLoading } = this.props;
@@ -53,18 +54,18 @@ interface LinkStateProp {
   isLoading: boolean;
 }
 interface LinkDispatchProps {
-  getProfiles: () => any;
+  requestProfiles: () => any;
 }
 
 const mapStateToProps = (state: AppState): LinkStateProp => ({
-  profile: state.profile.profiles[0],
-  isLoading: state.profile.isLoading
+  profile: selectProfiles(state),
+  isLoading: selectIsProfileLoading(state)
 });
 
 const mapDispatchToProps = (
   dispatch: ThunkDispatch<any, any, AppActions>,
   props: ProfilesProps
 ): LinkDispatchProps => ({
-  getProfiles: bindActionCreators(getProfiles, dispatch)
+  requestProfiles: bindActionCreators(requestProfiles, dispatch)
 });
 export default connect(mapStateToProps, mapDispatchToProps)(Profiles);

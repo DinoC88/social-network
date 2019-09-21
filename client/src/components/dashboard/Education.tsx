@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Moment from 'react-moment';
-import { deleteEducation } from '../../actions/profileActions';
 import { AppState } from '../../reducers';
 import { AppActions } from '../../types/types';
 import { ThunkDispatch } from 'redux-thunk';
 import { bindActionCreators } from 'redux';
+import { deleteEduRequest } from '../../actions/profileActions';
+import { selectEducation } from '../../selectors/selectors';
 
 interface EducationProps {}
 interface EducationState {}
@@ -14,7 +15,7 @@ type Props = EducationProps & LinkDispatchProps & LinkStateProp;
 
 class Education extends Component<Props, EducationState> {
   onDeleteClick(id: number) {
-    this.props.deleteEducation(id);
+    this.props.deleteEduRequest(id);
   }
   render() {
     const education = this.props.education
@@ -59,17 +60,17 @@ interface LinkStateProp {
   education: any;
 }
 interface LinkDispatchProps {
-  deleteEducation: (id: number) => any;
+  deleteEduRequest: (id: number) => any;
 }
 
 const mapStateToProps = (state: AppState): LinkStateProp => ({
-  education: state.profile.education[0]
+  education: selectEducation(state)
 });
 
 const mapDispatchToProps = (
   dispatch: ThunkDispatch<any, any, AppActions>,
   props: EducationProps
 ): LinkDispatchProps => ({
-  deleteEducation: bindActionCreators(deleteEducation, dispatch)
+  deleteEduRequest: bindActionCreators(deleteEduRequest, dispatch)
 });
 export default connect(mapStateToProps, mapDispatchToProps)(Education);

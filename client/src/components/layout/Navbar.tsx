@@ -1,11 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { logoutUser } from '../../actions/authActions';
 import { AppState } from '../../reducers';
 import { ThunkDispatch } from 'redux-thunk';
 import { AppActions } from '../../types/types';
 import { bindActionCreators } from 'redux';
+import { logoutRequest } from '../../actions/authActions';
+import { selectUser, selectIsAuth } from '../../selectors/selectors';
 
 interface NavbarProps {}
 interface NavbarState {}
@@ -15,7 +16,7 @@ type Props = NavbarProps & LinkDispatchProps & LinkStateProp;
 class Navbar extends React.Component<Props, NavbarState> {
   onLogoutClick = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
-    this.props.logoutUser();
+    this.props.logoutRequest();
   };
 
   render() {
@@ -94,16 +95,16 @@ interface LinkStateProp {
   user: any;
 }
 interface LinkDispatchProps {
-  logoutUser: () => any;
+  logoutRequest: () => any;
 }
 
 const mapStateToProps = (state: AppState): LinkStateProp => ({
-  auth: state.auth.isAuthenticated,
-  user: state.auth.user
+  auth: selectIsAuth(state),
+  user: selectUser(state)
 });
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AppActions>): LinkDispatchProps => ({
-  logoutUser: bindActionCreators(logoutUser, dispatch)
+  logoutRequest: bindActionCreators(logoutRequest, dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Navbar);

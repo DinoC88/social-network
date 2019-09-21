@@ -6,17 +6,20 @@ import ProfileHeader from './ProfileHeader';
 import ProfileCreds from './ProfileCreds';
 import Spinner from '../common/Spinner';
 import { RouteComponentProps } from 'react-router-dom';
-import { getProfileByid, getCurrentEducationById, getCurrentExperienceById } from '../../actions/profileActions';
 import { History } from 'history';
 import { AppState } from '../../reducers';
 import { AppActions } from '../../types/types';
 import { ThunkDispatch } from 'redux-thunk';
 import { bindActionCreators } from 'redux';
+import { requestProfileById, requestExpById, requestEduById } from '../../actions/profileActions';
+import { selectEducation, selectExperience, selectIsProfileLoading, selectProfile } from '../../selectors/selectors';
 
 type RouteParams = {
   id: any;
 };
+
 interface RouteProps extends RouteComponentProps<RouteParams>, React.Props<RouteParams> {}
+
 interface ProfileProps {
   history: History;
 }
@@ -34,9 +37,9 @@ class Profile extends React.Component<Props, ProfileState> {
     };
   }
   async componentDidMount() {
-    await this.props.getProfileByid(this.props.match.params.id);
-    await this.props.getCurrentEducationById(this.props.match.params.id);
-    await this.props.getCurrentExperienceById(this.props.match.params.id);
+    await this.props.requestProfileById(this.props.match.params.id);
+    await this.props.requestEduById(this.props.match.params.id);
+    await this.props.requestExpById(this.props.match.params.id);
     this.setState({
       isLoading: false
     });
@@ -83,22 +86,22 @@ interface LinkStateProp {
   education: any;
 }
 interface LinkDispatchProps {
-  getProfileByid: (id: number) => any;
-  getCurrentEducationById: (id: number) => any;
-  getCurrentExperienceById: (id: number) => any;
+  requestProfileById: (id: number) => any;
+  requestEduById: (id: number) => any;
+  requestExpById: (id: number) => any;
 }
 
 const mapStateToProps = (state: AppState): LinkStateProp => ({
-  profile: state.profile.profiletest[0],
-  isLoading: state.profile.isLoading,
-  experience: state.profile.experience[0],
-  education: state.profile.education[0]
+  profile: selectProfile(state),
+  isLoading: selectIsProfileLoading(state),
+  experience: selectExperience(state),
+  education: selectEducation(state)
 });
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AppActions>): LinkDispatchProps => ({
-  getProfileByid: bindActionCreators(getProfileByid, dispatch),
-  getCurrentEducationById: bindActionCreators(getCurrentEducationById, dispatch),
-  getCurrentExperienceById: bindActionCreators(getCurrentExperienceById, dispatch)
+  requestProfileById: bindActionCreators(requestProfileById, dispatch),
+  requestEduById: bindActionCreators(requestEduById, dispatch),
+  requestExpById: bindActionCreators(requestExpById, dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profile as any);

@@ -1,12 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import {
-  getCurrentProfile,
-  deleteAccount,
-  getCurrentEducation,
-  getCurrentExperience
-} from '../../actions/profileActions';
 import { AppState } from '../../reducers';
 import { ThunkDispatch } from 'redux-thunk';
 import { AppActions } from '../../types/types';
@@ -15,6 +9,8 @@ import Spinner from '../common/Spinner';
 import ProfileActions from './ProfileActions';
 import Education from './Education';
 import Experience from './Experience';
+import { requestProfileToken, requestEduToken, requestExpToken, deleteAccRequest } from '../../actions/profileActions';
+import { selectProfile, selectIsProfileLoading, selectUser } from '../../selectors/selectors';
 
 interface DashboardProps {}
 interface DashboardState {}
@@ -23,13 +19,15 @@ type Props = DashboardProps & LinkDispatchProps & LinkStateProp;
 
 class Dashboard extends React.Component<Props, DashboardState> {
   componentDidMount() {
-    this.props.getCurrentProfile();
-    this.props.getCurrentEducation();
-    this.props.getCurrentExperience();
+    this.props.requestProfileToken();
+    this.props.requestEduToken();
+    this.props.requestExpToken();
   }
 
   onDeleteClick = () => {
-    this.props.deleteAccount();
+    if (window.confirm('Are you sure? This can not be undone')) {
+      this.props.deleteAccRequest();
+    }
   };
   render() {
     const { profile, isLoading, user } = this.props;
@@ -87,25 +85,25 @@ interface LinkStateProp {
   user: any;
 }
 interface LinkDispatchProps {
-  getCurrentProfile: () => any;
-  getCurrentEducation: () => any;
-  getCurrentExperience: () => any;
-  deleteAccount: () => any;
+  requestProfileToken: () => any;
+  requestEduToken: () => any;
+  requestExpToken: () => any;
+  deleteAccRequest: () => any;
 }
 
 const mapStateToProps = (state: AppState): LinkStateProp => ({
-  isLoading: state.profile.isLoading,
-  profile: state.profile.profiletest[0],
-  user: state.auth.user
+  isLoading: selectIsProfileLoading(state),
+  profile: selectProfile(state),
+  user: selectUser(state)
 });
 
 const mapDispatchToProps = (
   dispatch: ThunkDispatch<any, any, AppActions>,
   props: DashboardProps
 ): LinkDispatchProps => ({
-  getCurrentProfile: bindActionCreators(getCurrentProfile, dispatch),
-  getCurrentEducation: bindActionCreators(getCurrentEducation, dispatch),
-  getCurrentExperience: bindActionCreators(getCurrentExperience, dispatch),
-  deleteAccount: bindActionCreators(deleteAccount, dispatch)
+  requestProfileToken: bindActionCreators(requestProfileToken, dispatch),
+  requestEduToken: bindActionCreators(requestEduToken, dispatch),
+  requestExpToken: bindActionCreators(requestExpToken, dispatch),
+  deleteAccRequest: bindActionCreators(deleteAccRequest, dispatch)
 });
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

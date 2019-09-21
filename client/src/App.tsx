@@ -14,14 +14,13 @@ import PrivateRoute from './components/common/PrivateRoute';
 import Dashboard from './components/dashboard/Dashboard';
 import CreateProfile from './components/create-profile/CreateProfile';
 import setAuthToken from './utils/setAuthToken';
-import { setCurrentUser } from './actions/authActions';
-
 import jwt_decode from 'jwt-decode';
-import { SET_CURRENT_USER } from './types/types';
 import EditProfile from './components/edit-profile/EditProfile';
 import AddEducation from './components/add-credentials/AddEducation';
 import AddExperience from './components/add-credentials/AddExperience';
 import Posts from './components/posts/Posts';
+import { loginSuccess, logoutRequest } from './actions/authActions';
+
 //Check for token
 if (localStorage.jwtToken !== undefined) {
   //Set auth token
@@ -29,16 +28,13 @@ if (localStorage.jwtToken !== undefined) {
   //Decode token and get user info and exp
   const decoded: any = jwt_decode(localStorage.jwtToken);
   //Set user and isAuthenticated
-  store.dispatch(setCurrentUser(decoded));
+  store.dispatch(loginSuccess(decoded));
   const currentTime = Date.now() / 1000;
   if (decoded.exp < currentTime) {
     //Logout user
     localStorage.removeItem('jwtToken');
     setAuthToken(false);
-    store.dispatch({
-      type: SET_CURRENT_USER,
-      payload: {}
-    });
+    store.dispatch(logoutRequest());
     //Redirect to login
     window.location.href = '/login';
   }

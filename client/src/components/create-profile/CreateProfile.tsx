@@ -6,11 +6,12 @@ import TextFieldGroup from "../common/TextFieldGroup";
 import TextAreaFieldGroup from "../common/TextAreaFieldGroup";
 import InputGroup from "../common/InputGroup";
 import SelectListGroup from "../common/SelectListGroup";
-import { createProfile } from "../../actions/profileActions";
 import { AppState } from "../../reducers";
 import { ThunkDispatch } from "redux-thunk";
 import { AppActions } from "../../types/types";
 import { bindActionCreators } from "redux";
+import { createProfileRequest} from "../../actions/profileActions";
+import { selectErrors } from '../../selectors/selectors';
 
 interface CreateProfileProps {
 	history: History;
@@ -73,7 +74,7 @@ class CreateProfile extends Component<Props, CreateProfileState> {
       instagram: this.state.instagram
     };
 
-    this.props.createProfile(profileData, this.props.history);
+    this.props.createProfileRequest(profileData, this.props.history);
   };
   onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     this.setState(({
@@ -89,8 +90,8 @@ class CreateProfile extends Component<Props, CreateProfileState> {
       socialInputs = (
         <div>
           <InputGroup
-            name="twitter"
             placeholder="Twitter Profile URL"
+            name="twitter"
             icon="fab fa-twitter"
             value={this.state.twitter}
             onChange={this.onChange}
@@ -259,19 +260,19 @@ interface LinkStateProp {
   error: any
 }
 interface LinkDispatchProps {
-	createProfile: (profileData: any, history: any) => any;
+	createProfileRequest: (profileData: any, history: any) => any;
 }
 
 const mapStateToProps = (state: AppState): LinkStateProp => ({
   profile: state.profile.profiletest,
-  error: state.error
+  error: selectErrors(state)
 });
 
 const mapDispatchToProps = (
 	dispatch: ThunkDispatch<any, any, AppActions>,
 	props: CreateProfileProps
 ): LinkDispatchProps => ({
-	createProfile: bindActionCreators(createProfile, dispatch),
+	createProfileRequest: bindActionCreators(createProfileRequest, dispatch),
 });
 
 export default connect(

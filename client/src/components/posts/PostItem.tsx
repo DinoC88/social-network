@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { deletePost } from '../../actions/postActions';
 import { AppState } from '../../reducers';
 import { ThunkDispatch } from 'redux-thunk';
 import { AppActions } from '../../types/types';
 import { bindActionCreators } from 'redux';
+import { deletePostRequest } from '../../actions/postActions';
+import { selectUser } from '../../selectors/selectors';
 
 interface PostItemProps {
   post: any;
@@ -29,7 +30,7 @@ class PostItem extends Component<Props, PostItemState> {
             <p className="lead">{post.text}</p>
             {post.userid === user.id ? (
               <button
-                onClick={async () => await this.props.deletePost(post.id)}
+                onClick={async () => await this.props.deletePostRequest(post.id)}
                 type="button"
                 className="btn btn-danger mr-1"
               >
@@ -47,17 +48,17 @@ interface LinkStateProp {
   user: any;
 }
 interface LinkDispatchProps {
-  deletePost: (id: number) => any;
+  deletePostRequest: (id: number) => any;
 }
 
 const mapStateToProps = (state: AppState): LinkStateProp => ({
-  user: state.auth.user
+  user: selectUser(state)
 });
 
 const mapDispatchToProps = (
   dispatch: ThunkDispatch<any, any, AppActions>,
   props: PostItemProps
 ): LinkDispatchProps => ({
-  deletePost: bindActionCreators(deletePost, dispatch)
+  deletePostRequest: bindActionCreators(deletePostRequest, dispatch)
 });
 export default connect(mapStateToProps, mapDispatchToProps)(PostItem);

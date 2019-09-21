@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import TextAreaFieldGroup from '../common/TextAreaFieldGroup';
-import { addPost } from '../../actions/postActions';
 import { AppState } from '../../reducers';
 import { AppActions } from '../../types/types';
 import { ThunkDispatch } from 'redux-thunk';
 import { bindActionCreators } from 'redux';
-
+import { addPostRequest } from '../../actions/postActions';
+import { selectErrors, selectAuth } from '../../selectors/selectors';
 interface PostFormProps {}
 interface PostFormState {
   text: string;
@@ -31,7 +31,7 @@ class PostForm extends Component<Props, PostFormState> {
       name: user.name,
       avatar: user.avatar
     };
-    this.props.addPost(newPost);
+    this.props.addPostRequest(newPost);
     this.setState({ text: '' });
   };
   onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -71,18 +71,18 @@ interface LinkStateProp {
   errors: any;
 }
 interface LinkDispatchProps {
-  addPost: (newPost: any) => any;
+  addPostRequest: (newPost: any) => any;
 }
 
 const mapStateToProps = (state: AppState): LinkStateProp => ({
-  auth: state.auth,
-  errors: state.error
+  auth: selectAuth(state),
+  errors: selectErrors(state)
 });
 
 const mapDispatchToProps = (
   dispatch: ThunkDispatch<any, any, AppActions>,
   props: PostFormProps
 ): LinkDispatchProps => ({
-  addPost: bindActionCreators(addPost, dispatch)
+  addPostRequest: bindActionCreators(addPostRequest, dispatch)
 });
 export default connect(mapStateToProps, mapDispatchToProps)(PostForm);

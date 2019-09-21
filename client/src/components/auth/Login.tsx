@@ -1,12 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import TextFieldGroup from '../common/TextFieldGroup';
-import { loginUser } from '../../actions/authActions';
 import { AppState } from '../../reducers';
 import { ThunkDispatch } from 'redux-thunk';
 import { bindActionCreators } from 'redux';
 import { AppActions } from '../../types/types';
 import { IErrors } from '../../interface/error.interface';
+import { loginRequest } from '../../actions/authActions';
+import { selectErrors, selectUser, selectIsAuth } from '../../selectors/selectors';
 
 interface LoginProps {
   history: any;
@@ -39,7 +40,7 @@ class Login extends React.Component<Props, LoginState> {
       email: this.state.email,
       password: this.state.password
     };
-    this.props.loginUser(userData, this.props.history);
+    this.props.loginRequest(userData, this.props.history);
   };
   private onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -87,17 +88,17 @@ interface LinkStateProp {
   error: IErrors;
 }
 interface LinkDispatchProps {
-  loginUser: (userData: any, history: any) => any;
+  loginRequest: (userData: any, history: any) => any;
 }
 
 const mapStateToProps = (state: AppState): LinkStateProp => ({
-  isAuth: state.auth.isAuthenticated,
-  user: state.auth.user,
-  error: state.error
+  isAuth: selectIsAuth(state),
+  user: selectUser(state),
+  error: selectErrors(state)
 });
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AppActions>): LinkDispatchProps => ({
-  loginUser: bindActionCreators(loginUser, dispatch)
+  loginRequest: bindActionCreators(loginRequest, dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login as any);

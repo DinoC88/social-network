@@ -5,13 +5,14 @@ import TextFieldGroup from "../common/TextFieldGroup";
 import TextAreaFieldGroup from "../common/TextAreaFieldGroup";
 import InputGroup from "../common/InputGroup";
 import SelectListGroup from "../common/SelectListGroup";
-import { createProfile, getCurrentProfile } from "../../actions/profileActions";
 import isEmpty from "../../validation/is-empty";
 import { History } from 'history';
 import { AppState } from "../../reducers";
 import { AppActions } from "../../types/types";
 import { ThunkDispatch } from "redux-thunk";
 import { bindActionCreators } from "redux";
+import { createProfileRequest,requestProfileToken} from "../../actions/profileActions";
+import { selectProfile, selectErrors } from '../../selectors/selectors';
 
 interface EditProfileProps {
 	history: History;
@@ -56,7 +57,7 @@ class EditProfile extends Component<Props, EditProfileState> {
   }
   
   componentDidMount() {
-    this.props.getCurrentProfile();    
+    this.props.requestProfileToken();    
   }
 
   componentWillReceiveProps = (nextProps: any) => {
@@ -112,7 +113,7 @@ class EditProfile extends Component<Props, EditProfileState> {
       instagram: this.state.instagram
     };
 
-    this.props.createProfile(profileData, this.props.history);
+    this.props.createProfileRequest(profileData, this.props.history);
   };
   onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     this.setState(({
@@ -298,21 +299,21 @@ interface LinkStateProp {
   error: any
 }
 interface LinkDispatchProps {
-  createProfile: (profileData: any, history: any) => any;
-  getCurrentProfile: () => any
+  createProfileRequest: (profileData: any, history: any) => any;
+  requestProfileToken: () => any
 }
 
 const mapStateToProps = (state: AppState): LinkStateProp => ({
-  profile: state.profile.profiletest[0],
-  error: state.error
+  profile: selectProfile(state),
+  error: selectErrors(state)
 });
 
 const mapDispatchToProps = (
 	dispatch: ThunkDispatch<any, any, AppActions>,
 	props: EditProfileProps
 ): LinkDispatchProps => ({
-  createProfile: bindActionCreators(createProfile, dispatch),
-  getCurrentProfile: bindActionCreators(getCurrentProfile, dispatch),
+  createProfileRequest: bindActionCreators(createProfileRequest, dispatch),
+  requestProfileToken: bindActionCreators(requestProfileToken, dispatch),
 });
 
 export default connect(

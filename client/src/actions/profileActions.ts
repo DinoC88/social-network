@@ -1,228 +1,56 @@
-import axios from 'axios';
 import {
-  AppActions,
-  GET_PROFILES,
-  PROFILE_LOADING,
-  GET_PROFILE,
   GET_EDUCATION,
   GET_EXPERIENCE,
-  GET_ERROR,
-  SET_CURRENT_USER
+  REQUEST_PROFILES,
+  REQUEST_PROFILE,
+  GET_PROFILE,
+  PROFILE_LOADING,
+  GET_PROFILES,
+  REQUEST_PROFILE_TOKEN,
+  ADD_EDU_REQUEST,
+  ADD_EXP_REQUEST,
+  CREATE_PROFILE,
+  DELETE_EXP_REQUEST,
+  DELETE_EDU_REQUEST,
+  DELETE_ACC_REQUEST,
+  REQUEST_PROFILE_BY_ID,
+  REQUEST_EDU_ID,
+  REQUEST_EXP_ID,
+  REQUEST_EDU_TOKEN,
+  REQUEST_EXP_TOKEN
 } from '../types/types';
-import { Dispatch } from 'redux';
-import { AppState } from '../reducers';
 
-//Get all profiles
-export const getProfiles = () => {
-  return (dispatch: Dispatch<AppActions>, getState: () => AppState) => {
-    dispatch({
-      type: PROFILE_LOADING
-    });
-    axios
-      .get('/api/profile/all')
-      .then((res) => {
-        dispatch({
-          type: GET_PROFILES,
-          payload: res.data
-        });
-      })
-      .catch((err) => console.log(err));
-  };
-};
+export const requestProfiles = () => ({ type: REQUEST_PROFILES });
+export const profileLoading = () => ({ type: PROFILE_LOADING });
+export const receiveProfiles = (data: any) => ({ type: GET_PROFILES, payload: data });
+export const requestProfile = (handle: any) => ({ type: REQUEST_PROFILE, handle });
+export const requestProfileToken = () => ({ type: REQUEST_PROFILE_TOKEN });
+export const requestEduToken = () => ({ type: REQUEST_EDU_TOKEN });
+export const requestExpToken = () => ({ type: REQUEST_EXP_TOKEN });
 
-//get profile by id
-export const getProfileByid = (id: number) => (dispatch: Dispatch<AppActions>) => {
-  dispatch({
-    type: PROFILE_LOADING
-  });
-  axios
-    .get(`/api/profile/${id}`)
-    .then((res) =>
-      dispatch({
-        type: GET_PROFILE,
-        payload: res.data
-      })
-    )
-    .catch((err) => console.log(err));
-};
+export const receiveProfile = (data: any) => ({ type: GET_PROFILE, payload: data });
 
-//get current education
-export const getCurrentEducationById = (id: number) => (dispatch: Dispatch<AppActions>) => {
-  dispatch({
-    type: PROFILE_LOADING
-  });
-  axios
-    .get(`/api/profile/educationbyid/${id}`)
-    .then((res) => {
-      dispatch({
-        type: GET_EDUCATION,
-        payload: res.data
-      });
-    })
-    .catch((err) => console.log(err));
-};
+export const addEduRequest = (eduData: any, history: any) => ({
+  type: ADD_EDU_REQUEST,
+  eduData,
+  history
+});
+export const addExpRequest = (expData: any, history: any) => ({
+  type: ADD_EXP_REQUEST,
+  expData,
+  history
+});
+export const createProfileRequest = (profileData: any, history: any) => ({
+  type: CREATE_PROFILE,
+  profileData,
+  history
+});
+export const deleteExpRequest = (id: any) => ({ type: DELETE_EXP_REQUEST, id });
+export const deleteEduRequest = (id: any) => ({ type: DELETE_EDU_REQUEST, id });
+export const deleteAccRequest = () => ({ type: DELETE_ACC_REQUEST });
 
-//get current experience
-export const getCurrentExperienceById = (id: number) => (dispatch: Dispatch<AppActions>) => {
-  dispatch({
-    type: PROFILE_LOADING
-  });
-  axios
-    .get(`/api/profile/experiencebyid/${id}`)
-    .then((res) => {
-      dispatch({
-        type: GET_EXPERIENCE,
-        payload: res.data
-      });
-    })
-    .catch((err) => console.log(err));
-};
-
-//get current profile
-export const getCurrentProfile = () => (dispatch: Dispatch<AppActions>) => {
-  dispatch({
-    type: PROFILE_LOADING
-  });
-  axios
-    .get('/api/profile')
-    .then((res) =>
-      dispatch({
-        type: GET_PROFILE,
-        payload: res.data
-      })
-    )
-    .catch((err) =>
-      dispatch({
-        type: GET_PROFILE,
-        payload: []
-      })
-    );
-};
-
-//get current education
-export const getCurrentEducation = () => (dispatch: Dispatch<AppActions>) => {
-  dispatch({
-    type: PROFILE_LOADING
-  });
-  axios
-    .get('/api/profile/education')
-    .then((res) => {
-      dispatch({
-        type: GET_EDUCATION,
-        payload: res.data
-      });
-    })
-    .catch((err) =>
-      dispatch({
-        type: GET_EDUCATION,
-        payload: []
-      })
-    );
-};
-
-//get current experience
-export const getCurrentExperience = () => (dispatch: Dispatch<AppActions>) => {
-  dispatch({
-    type: PROFILE_LOADING
-  });
-  axios
-    .get('/api/profile/experience')
-    .then((res) => {
-      dispatch({
-        type: GET_EXPERIENCE,
-        payload: res.data
-      });
-    })
-    .catch((err) =>
-      dispatch({
-        type: GET_EXPERIENCE,
-        payload: []
-      })
-    );
-};
-
-//Delete education
-export const deleteEducation = (id: number) => (dispatch: Dispatch<AppActions>) => {
-  axios
-    .delete(`/api/profile/education/${id}`)
-    .then((res) =>
-      dispatch({
-        type: GET_EDUCATION,
-        payload: res.data
-      })
-    )
-    .catch((err) =>
-      dispatch({
-        type: GET_ERROR,
-        payload: err.response.data
-      })
-    );
-};
-
-//Delete experience
-export const deleteExperience = (id: number) => (dispatch: Dispatch<AppActions>) => {
-  axios
-    .delete(`/api/profile/experience/${id}`)
-    .then((res) =>
-      dispatch({
-        type: GET_EXPERIENCE,
-        payload: res.data
-      })
-    )
-    .catch((err) =>
-      dispatch({
-        type: GET_ERROR,
-        payload: err.response.data
-      })
-    );
-};
-
-//Delete account & profile
-export const deleteAccount = () => (dispatch: Dispatch<AppActions>) => {
-  if (window.confirm('Are you sure? This can not be undone')) {
-    axios
-      .delete('/api/users')
-      .then((res) =>
-        dispatch({
-          type: SET_CURRENT_USER,
-          payload: {}
-        })
-      )
-      .catch((err) =>
-        dispatch({
-          type: GET_ERROR,
-          payload: err.response.data
-        })
-      );
-  }
-};
-
-//Create profile
-export const createProfile = (profileData: any, history: any) => (dispatch: Dispatch<AppActions>) => {
-  axios.post('/api/profile', profileData).then((res) => history.push('/dashboard')).catch((err) =>
-    dispatch({
-      type: GET_ERROR,
-      payload: err.response.data
-    })
-  );
-};
-
-//Add experience
-export const addExperience = (expData: any, history: any) => (dispatch: Dispatch<AppActions>) => {
-  axios.post('/api/profile/experience', expData).then((res) => history.push('/dashboard')).catch((err) =>
-    dispatch({
-      type: GET_ERROR,
-      payload: err.response.data
-    })
-  );
-};
-
-//Add education
-export const addEducation = (eduData: any, history: any) => (dispatch: Dispatch<AppActions>) => {
-  axios.post('/api/profile/education', eduData).then((res) => history.push('/dashboard')).catch((err) =>
-    dispatch({
-      type: GET_ERROR,
-      payload: err.response.data
-    })
-  );
-};
+export const requestProfileById = (id: any) => ({ type: REQUEST_PROFILE_BY_ID, id });
+export const requestEduById = (id: any) => ({ type: REQUEST_EDU_ID, id });
+export const requestExpById = (id: any) => ({ type: REQUEST_EXP_ID, id });
+export const receiveEducation = (data: any) => ({ type: GET_EDUCATION, payload: data });
+export const receiveExperience = (data: any) => ({ type: GET_EXPERIENCE, payload: data });

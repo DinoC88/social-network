@@ -41,8 +41,8 @@ export async function registerUser(req: Request, res: Response): Promise<Respons
     await conn.query('INSERT INTO users SET ?', [ newUser ]);
     res.json('User created');
   } catch (e) {
-    res.json('Email already taken');
-    console.log(e);
+    errors.email = 'Email already taken';
+    return res.status(404).json(errors);
   }
 }
 

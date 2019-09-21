@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Moment from 'react-moment';
-import { deleteExperience } from '../../actions/profileActions';
 import { AppState } from '../../reducers';
 import { AppActions } from '../../types/types';
 import { ThunkDispatch } from 'redux-thunk';
 import { bindActionCreators } from 'redux';
+import { deleteExpRequest } from '../../actions/profileActions';
+import { selectExperience } from '../../selectors/selectors';
 
 interface ExperienceProps {}
 interface ExperienceState {}
@@ -14,7 +15,7 @@ type Props = ExperienceProps & LinkDispatchProps & LinkStateProp;
 
 class Experience extends Component<Props, ExperienceState> {
   onDeleteClick(id: number) {
-    this.props.deleteExperience(id);
+    this.props.deleteExpRequest(id);
   }
   render() {
     const experience = this.props.experience
@@ -59,17 +60,17 @@ interface LinkStateProp {
   experience: any;
 }
 interface LinkDispatchProps {
-  deleteExperience: (id: number) => any;
+  deleteExpRequest: (id: number) => any;
 }
 
 const mapStateToProps = (state: AppState): LinkStateProp => ({
-  experience: state.profile.experience[0]
+  experience: selectExperience(state)
 });
 
 const mapDispatchToProps = (
   dispatch: ThunkDispatch<any, any, AppActions>,
   props: ExperienceProps
 ): LinkDispatchProps => ({
-  deleteExperience: bindActionCreators(deleteExperience, dispatch)
+  deleteExpRequest: bindActionCreators(deleteExpRequest, dispatch)
 });
 export default connect(mapStateToProps, mapDispatchToProps)(Experience);

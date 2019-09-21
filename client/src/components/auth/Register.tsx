@@ -2,12 +2,13 @@ import React from 'react';
 import { History } from 'history';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { registerUser } from '../../actions/authActions';
 import TextFieldGroup from '../common/TextFieldGroup';
 import { AppActions } from '../../types/types';
 import { AppState } from '../../reducers';
 import { ThunkDispatch } from 'redux-thunk';
 import { bindActionCreators } from 'redux';
+import { registerRequest } from '../../actions/authActions';
+import { selectErrors, selectIsAuth } from '../../selectors/selectors';
 
 interface RegisterProps {
   history: History;
@@ -49,7 +50,7 @@ class Register extends React.Component<Props, RegisterState> {
       password: this.state.password,
       password2: this.state.password2
     };
-    this.props.registerUser(newUser, this.props.history);
+    this.props.registerRequest(newUser, this.props.history);
   };
   render() {
     const { error } = this.props;
@@ -116,16 +117,16 @@ interface LinkStateProp {
   error: Errors;
 }
 interface LinkDispatchProps {
-  registerUser: (userData: any, history: any) => any;
+  registerRequest: (userData: any, history: any) => any;
 }
 
 const mapStateToProps = (state: AppState): LinkStateProp => ({
-  isAuth: state.auth.isAuthenticated,
-  error: state.error
+  isAuth: selectIsAuth(state),
+  error: selectErrors(state)
 });
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AppActions>): LinkDispatchProps => ({
-  registerUser: bindActionCreators(registerUser, dispatch)
+  registerRequest: bindActionCreators(registerRequest, dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Register as any));
