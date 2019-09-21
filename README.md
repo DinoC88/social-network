@@ -1,6 +1,6 @@
 ## Description
 
-Small social network for developers build with Typescript and Node, Express and MySQL for back-end and React, Redux and Bootstrap for front-end.
+Small social network for developers build with Typescript and Node, Express and MySQL for back-end and React, Redux with Redux Saga and Selectors for front-end.
 
 You can create profile with education and experience, view others profile, make comments and delete them...
 
